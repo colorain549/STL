@@ -19,7 +19,7 @@ template <typename T>
 class Queue
 {
 private:
-    shared_ptr<deque<T>> data;
+    shared_ptr<deque<T>> _dque;
 
 public:
     // 构造函数
