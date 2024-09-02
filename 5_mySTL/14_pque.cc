@@ -19,7 +19,7 @@ template <typename T>
 class PriorityQueue
 {
 private:
-    shared_ptr<vector<T>> data;
+    shared_ptr<vector<T>> _dque;
 
     // 上浮
     void heapifyUp();
