@@ -264,12 +264,12 @@ void List<T>::remove(const T &val)
         return;
     }
 
-    if (cur != _head || cur != _tail)
+    if (cur != _head && cur != _tail)
     {
         cur->prev->next = cur->next;
         cur->next->prev = cur->prev;
     }
-    else if (cur == _head || cur == _tail)
+    else if (cur == _head && cur == _tail)
     {
         _head = nullptr;
         _tail = nullptr;
