@@ -166,7 +166,7 @@ void Deque<T>::printElements() const
     size_t index = _frontIndex;
     for (size_t i = 0; i < _size; i++)
     {
-        cout << _elements[i] << " ";
+        cout << _elements[index] << " ";
         index = (index + 1) % _capacity;
     }
     cout << endl;
