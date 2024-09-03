@@ -31,7 +31,7 @@ public:
     // 构造函数
     PriorityQueue();
 
-    // 将底层容器转化为堆(用数组的形式表示堆?)
+    // 将初始化时 传入的动态数组 转化为堆
     PriorityQueue(const shared_ptr<vector<T>> &data);
 
     // 插入节点并调整
@@ -108,7 +108,7 @@ void PriorityQueue<T>::heapifyDown()
 template <typename T>
 PriorityQueue<T>::PriorityQueue() : data(make_shared<vector<T>>()) {}
 
-// 将底层容器转化为堆(用数组的形式表示堆?)
+// 将初始化时 传入的动态数组 转化为堆(初始化一般用下沉)
 template <typename T>
 PriorityQueue<T>::PriorityQueue(const shared_ptr<vector<T>> &data) : data(data)
 {
@@ -119,7 +119,7 @@ PriorityQueue<T>::PriorityQueue(const shared_ptr<vector<T>> &data) : data(data)
     }
 }
 
-// 插入节点并调整
+// 插入节点并调整(插入节点一般用上浮)
 template <typename T>
 void PriorityQueue<T>::push(const T &val)
 {
@@ -127,7 +127,7 @@ void PriorityQueue<T>::push(const T &val)
     heapifyUp();
 }
 
-// 删除节点并调节
+// 删除节点并调节(删除节点一般用上浮)
 template <typename T>
 void PriorityQueue<T>::pop()
 {
