@@ -15,6 +15,7 @@ template <typename T>
 class Vector
 {
 private:
+    // 笔记: 可将 T *_elements 想象为数组  
     T *_elements;
     size_t _capacity;
     size_t _size;
