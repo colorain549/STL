@@ -214,6 +214,7 @@ void Deque<T>::resize()
     // elems |2 |6 |2 |1 |3 |
     // index |0 |1 |2 |3 |4 |
     // _ _ _ _ _ _ _ _ _ _ _
+    // !!!拷贝元素到新数组!!!
     size_t index = _frontIndex;
     for (size_t i = 0; i < _size; i++)
     {
