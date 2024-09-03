@@ -15,7 +15,7 @@ template <typename T>
 class Vector
 {
 private:
-    // 笔记: 可将 T *_elements 想象为数组  
+    // 笔记: 可将 T *_elements 想象为数组
     T *_elements;
     size_t _capacity;
     size_t _size;
@@ -96,6 +96,7 @@ Vector<T>::Vector(const Vector &other) : _capacity(other._capacity), _size(other
     _elements = new T[_capacity];
     // 从一个容器复制元素到另一个容器
     // 旧容器的迭代器开始位置 旧容器的迭代器结束位置 新容器的迭代器开始位置
+    // 笔记: other._elements是原来的数组 _elements是新数组
     std::copy(other._elements, other._elements + _size, _elements);
 }
 
@@ -106,8 +107,11 @@ Vector<T> &Vector<T>::operator=(const Vector &other)
     // 防止自复制
     if (this != &other)
     {
+        // 清空_elements 下面用来指向新数组内存
         delete[] _elements;
+        // 笔记: _capacity是新数组容量 other._capacity是原数组容量
         _capacity = other._capacity;
+        // 新数组的_size
         _size = other._size();
         // 分配内存
         _elements = new T(_capacity);
@@ -120,11 +124,14 @@ Vector<T> &Vector<T>::operator=(const Vector &other)
 template <typename T>
 void Vector<T>::push_back(const T &val)
 {
-    if (_capacity == 0)
+    // 检查是否需要分配内存
+    if (_size == _capacity)
     {
         reserve(_capacity == 0 ? 1 : 2 * _capacity);
     }
-    _elements[_size++] = val;
+    // 数组末尾添加元素
+    _elements[_size] = val;
+    ++_size;
 }
 
 // 获取数组中元素的个数
@@ -173,15 +180,17 @@ void Vector<T>::insert(size_t index, const T &val)
     {
         throw std::out_of_range("Index out of range.");
     }
+    // 检查是否需要分配内存
     if (_size == _capacity)
     {
         reserve(_capacity == 0 ? 1 : 2 * _capacity);
     }
-    // 插入元素(实质是右移和覆盖)
+    // !!!插入元素(实质是右移和覆盖)!!!重难点及精粹!!!
     for (size_t i = _size; i > index; --i)
     {
         _elements[i] = _elements[i - 1];
     }
+    // 插入元素
     _elements[index] = val;
     ++_size;
 }
