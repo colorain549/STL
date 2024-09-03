@@ -177,6 +177,7 @@ void Vector<T>::insert(size_t index, const T &val)
     {
         reserve(_capacity == 0 ? 1 : 2 * _capacity);
     }
+    // 插入元素(实质是右移和覆盖)
     for (size_t i = _size; i > index; --i)
     {
         _elements[i] = _elements[i - 1];
