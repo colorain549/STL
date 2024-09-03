@@ -70,15 +70,20 @@ Deque<T>::~Deque()
 template <typename T>
 void Deque<T>::push_front(const T &val)
 {
+    // 检查是否需要分配内存
     if (_size == _capacity)
     {
         resize();
     }
-
+    // example(_forntIndex = 0, _capacity = 5)
+    // _ _ _ _ _ _ _ _ _ _ _
+    // elems |2 |6 |2 |  |  |
+    // index |0 |1 |2 |3 |4 |
+    // _ _ _ _ _ _ _ _ _ _ _
+    // 计算新的下标
     _frontIndex = (_frontIndex - 1 + _capacity) % _capacity;
-
+    // 插入元素
     _elements[_frontIndex] = val;
-
     ++_size;
 }
 
@@ -86,15 +91,20 @@ void Deque<T>::push_front(const T &val)
 template <typename T>
 void Deque<T>::push_back(const T &val)
 {
+    // 检查是否需要分配内存
     if (_size == _capacity)
     {
         resize();
     }
-
+    // example(_backIndex = 3, _capacity = 5)
+    // _ _ _ _ _ _ _ _ _ _ _
+    // elems |2 |6 |2 |  |  |
+    // index |0 |1 |2 |3 |4 |
+    // _ _ _ _ _ _ _ _ _ _ _
+    // 插入元素
     _elements[_backIndex] = val;
-
+    // 计算新的下标
     _backIndex = (_backIndex + 1) % _capacity;
-
     ++_size;
 }
 
@@ -106,9 +116,13 @@ void Deque<T>::pop_front()
     {
         std::out_of_range("Deque is empty.");
     }
-
+    // example(_forntIndex = 0, _capacity = 5)
+    // _ _ _ _ _ _ _ _ _ _ _
+    // elems |2 |6 |2 |  |  |
+    // index |0 |1 |2 |3 |4 |
+    // _ _ _ _ _ _ _ _ _ _ _
+    // 计算新的下标
     _frontIndex = (_frontIndex + 1) % _capacity;
-
     --_size;
 }
 
@@ -120,9 +134,13 @@ void Deque<T>::pop_back()
     {
         std::out_of_range("Deque is empty.");
     }
-
+    // example(_backIndex = 3, _capacity = 5)
+    // _ _ _ _ _ _ _ _ _ _ _
+    // elems |2 |6 |2 |  |  |
+    // index |0 |1 |2 |3 |4 |
+    // _ _ _ _ _ _ _ _ _ _ _
+    // 计算新的下标
     _backIndex = (_backIndex - 1 + _capacity) % _capacity;
-
     --_size;
 }
 
@@ -134,6 +152,11 @@ T &Deque<T>::operator[](int index)
     {
         std::out_of_range("Index out of range.");
     }
+    // example(_forntIndex = 0, _capacity = 5)
+    // _ _ _ _ _ _ _ _ _ _ _
+    // elems |2 |6 |2 |  |  |
+    // index |0 |1 |2 |3 |4 |
+    // _ _ _ _ _ _ _ _ _ _ _
     return _elements[(_frontIndex + index) % _capacity];
 }
 
@@ -148,6 +171,7 @@ size_t Deque<T>::getSize() const
 template <typename T>
 void Deque<T>::clear()
 {
+    // 检查
     while (_size > 0)
     {
         pop_front();
@@ -158,11 +182,16 @@ void Deque<T>::clear()
 template <typename T>
 void Deque<T>::printElements() const
 {
+    // 检查
     if (_size == 0)
     {
         std::out_of_range("Deque is empty.");
     }
-
+    // example(_forntIndex = 3, _capacity = 5)
+    // _ _ _ _ _ _ _ _ _ _ _
+    // elems |2 |6 |2 |1 |3 |
+    // index |0 |1 |2 |3 |4 |
+    // _ _ _ _ _ _ _ _ _ _ _
     size_t index = _frontIndex;
     for (size_t i = 0; i < _size; i++)
     {
@@ -176,19 +205,24 @@ void Deque<T>::printElements() const
 template <typename T>
 void Deque<T>::resize()
 {
+    // 计算新的容量
     size_t newCapacity = _capacity == 0 ? 1 : 2 * _capacity;
-
+    // 分配内存
     T *newElement = new T[newCapacity];
-
+    // example(_forntIndex = 3, _capacity = 5)
+    // _ _ _ _ _ _ _ _ _ _ _
+    // elems |2 |6 |2 |1 |3 |
+    // index |0 |1 |2 |3 |4 |
+    // _ _ _ _ _ _ _ _ _ _ _
     size_t index = _frontIndex;
     for (size_t i = 0; i < _size; i++)
     {
         newElement[i] = _elements[index];
         index = (index + 1) % _capacity;
     }
-
+    // 释放就内存
     delete[] _elements;
-
+    // 重置
     _elements = newElement;
     _capacity = newCapacity;
     _frontIndex = 0;
