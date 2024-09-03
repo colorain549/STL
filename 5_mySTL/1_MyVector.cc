@@ -92,6 +92,7 @@ Vector<T>::~Vector()
 template <typename T>
 Vector<T>::Vector(const Vector &other) : _capacity(other._capacity), _size(other._size)
 {
+    // 分配内存
     _elements = new T[_capacity];
     // 从一个容器复制元素到另一个容器
     // 旧容器的迭代器开始位置 旧容器的迭代器结束位置 新容器的迭代器开始位置
@@ -102,12 +103,15 @@ Vector<T>::Vector(const Vector &other) : _capacity(other._capacity), _size(other
 template <typename T>
 Vector<T> &Vector<T>::operator=(const Vector &other)
 {
+    // 防止自复制
     if (this != &other)
     {
         delete[] _elements;
         _capacity = other._capacity;
         _size = other._size();
+        // 分配内存
         _elements = new T(_capacity);
+        // 拷贝元素到新内存
         std::copy(other._elements, other._elements + _size, _elements);
     }
 }
