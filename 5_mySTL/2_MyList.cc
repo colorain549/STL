@@ -15,6 +15,7 @@ template <typename T>
 class List
 {
 public:
+    // 重载<<运算符 用来输出 List<T> 对象的内容
     template <typename L>
     friend ostream &operator<<(ostream &os, const List<L> &pt);
 
@@ -25,12 +26,12 @@ private:
         T data;
         Node *next;
         Node *prev;
-
-        // 构造函数
+        // 构造函数 初始化 数据成员
         Node(const T &val, Node *nextNode = nullptr, Node *prevNode = nullptr)
             : data(val), next(nextNode), prev(prevNode) {}
     };
 
+    // 数据成员
     Node *_head;
     Node *_tail;
     size_t _size;
@@ -110,6 +111,9 @@ template <typename T>
 void List<T>::push_back(const T &val)
 {
     // Node(val, next, pre)
+    // 笔记:
+    // newNode->next = nullptr;
+    // newNode->pre = _tail;
     Node *newNode = new Node(val, nullptr, _tail);
     if (_head)
     {
@@ -119,6 +123,7 @@ void List<T>::push_back(const T &val)
     {
         _head = newNode;
     }
+    // 在末尾添加, _tail动了, 所以需改动_tail
     _tail = newNode;
     _size++;
 }
@@ -128,6 +133,9 @@ template <typename T>
 void List<T>::push_front(const T &val)
 {
     // Node(val, next, pre)
+    // 笔记:
+    // newNode->next = _head;
+    // _head->pre = nullptr;
     Node *newNode = new Node(val, _head, nullptr);
     if (_head)
     {
@@ -137,6 +145,7 @@ void List<T>::push_front(const T &val)
     {
         _tail = newNode;
     }
+    // 在开头添加, _head动了, 所以需改动_head
     _head = newNode;
     ++_size;
 }
@@ -155,6 +164,7 @@ T &List<T>::operator[](size_t index)
     Node *cur = _head;
     for (size_t i = 0; i < index; i++)
     {
+        // 注意: 将错误处理放到这里
         if (index < 0 || index > _size - 1)
         {
             std::out_of_range("Index out of range.");
@@ -172,6 +182,7 @@ const T &List<T>::operator[](size_t index) const
     Node *cur = _head;
     for (size_t i = 0; i < index; i++)
     {
+        // 注意: 将错误处理放到这里
         if (index < 0 || index > _size - 1)
         {
             std::out_of_range("Index out of range.");
@@ -185,12 +196,16 @@ const T &List<T>::operator[](size_t index) const
 template <typename T>
 void List<T>::pop_back()
 {
+    // 检查
     if (_size > 0)
     {
+        // 保存上一节点
         Node *newTail = _tail->prev;
+        // 释放内存
         delete _tail;
-
+        // 重置指向
         _tail = newTail;
+        // 检查是否为空
         if (_tail)
         {
             _tail->next = nullptr;
@@ -207,12 +222,16 @@ void List<T>::pop_back()
 template <typename T>
 void List<T>::pop_front()
 {
+    // 检查
     if (_size > 0)
     {
+        // 保存下一节点
         Node *newHead = _head->next;
+        // 释放内存
         delete _head;
-
+        // 重置指向
         _head = newHead;
+        // 检查是否为空
         if (_head)
         {
             _head->prev = nullptr;
@@ -241,11 +260,14 @@ typename List<T>::Node *List<T>::getNode(const T &val)
 template <typename T>
 T *List<T>::find(const T &val)
 {
+    // 调用成员函数
     Node *cur = getNode(val);
+    // 找不到则返回nullptr
     if (cur == nullptr)
     {
         return nullptr;
     }
+    // 找到直接返回
     return &cur->val;
 }
 
@@ -258,27 +280,31 @@ void List<T>::remove(const T &val)
     {
         cur = cur->next;
     }
-
+    // 找不到指定值
     if (cur == nullptr)
     {
         return;
     }
-
+    // 既不是头结点 也不是尾节点
     if (cur != _head && cur != _tail)
     {
+        // !!!建议: 画图理解!!!双链表精粹!!!
         cur->prev->next = cur->next;
         cur->next->prev = cur->prev;
     }
+    // 既是头结点 也是尾节点 只有1个节点 删除后为空
     else if (cur == _head && cur == _tail)
     {
         _head = nullptr;
         _tail = nullptr;
     }
+    // 是头结点 更新头节点为下一节点 及更新 新头节点的前驱_head->prev
     else if (cur == _head)
     {
         _head = cur->next;
         _head->prev = nullptr;
     }
+    // 是尾节点 更新尾节点为上一节点 及更新 新尾节点的后驱_tail->next
     else
     {
         _tail = cur->prev;
@@ -301,6 +327,8 @@ bool List<T>::empty() const
 template <typename T>
 void List<T>::clear()
 {
+    // 遍历节点 保存当前节点为临时节点
+    // 到下一个节点时 删除临时节点
     Node *cur = _head;
     while (cur)
     {
@@ -308,6 +336,7 @@ void List<T>::clear()
         cur = cur->next;
         delete tmp;
     }
+    // 记得更新_tail
     _tail = nullptr;
     _size = 0;
 }
@@ -357,6 +386,7 @@ void List<T>::printElements() const
 template <typename T>
 ostream &operator<<(ostream &os, const List<T> &pt)
 {
+    // 笔记: 记住auto cur = pt._head
     for (auto cur = pt._head; cur != nullptr; cur = cur->next)
     {
         os << " " << cur->data;
