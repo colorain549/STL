@@ -241,11 +241,16 @@ void Vector<T>::printElements() const
 template <typename T>
 void Vector<T>::reserve(size_t newCapacity)
 {
+    // 若请求扩展的容量 大于 现有的容量
     if (newCapacity > _capacity)
     {
+        // 分配内存
         T *newElements = new T(newCapacity);
+        // 旧内存 复制到 新内存
         std::copy(_elements, _elements + _size, newElements);
+        // 删除旧内存
         delete[] _elements;
+        // 更新
         _elements = newElements;
         _capacity = newCapacity;
     }
