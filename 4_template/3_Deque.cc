@@ -94,6 +94,10 @@ void Deque<T>::clear() {}
 template <typename T>
 void Deque<T>::printElements() const {}
 
+// 扩展数组容量
+template <typename T>
+void Deque<T>::resize() {}
+
 int main()
 {
     Deque<int> dque;
