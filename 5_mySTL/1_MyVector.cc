@@ -122,6 +122,44 @@ Vector<T> &Vector<T>::operator=(const Vector &other)
     return *this;
 }
 
+// 拷贝赋值操作符(更健壮的写法)
+// template <typename T>  
+// Vector<T>& Vector<T>::operator=(const Vector<T>& other)  
+// {  
+//     // 防止自复制  
+//     if (this != &other)  
+//     {  
+//         // 分配新内存  
+//         T* newElements = new T[other._capacity];  
+  
+//         try  
+//         {  
+//             // 拷贝元素到新内存  
+//             std::copy(other._elements, other._elements + other._size, newElements);  
+  
+//             // 释放旧内存  
+//             delete[] _elements;  
+  
+//             // 更新内部状态  
+//             _elements = newElements;  
+//             _capacity = other._capacity;  
+//             _size = other._size;  
+//         }  
+//         catch (const std::bad_alloc& e)  
+//         {  
+//             // 处理内存分配失败的情况  
+//             // 释放已分配但尚未使用的内存  
+//             delete[] newElements;  
+  
+//             // 可以选择抛出异常、记录错误或采取其他恢复措施  
+//             throw; // 重新抛出异常  
+//         }  
+//     }  
+  
+//     // 返回当前对象的引用  
+//     return *this;  
+// }
+
 // 添加元素到数组末尾
 template <typename T>
 void Vector<T>::push_back(const T &val)
