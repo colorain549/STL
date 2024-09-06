@@ -115,9 +115,9 @@ void List<T>::push_back(const T &val)
     // newNode->next = nullptr;
     // newNode->pre = _tail;
     Node *newNode = new Node(val, nullptr, _tail);
-    if (_head)
+    if (_tail)
     {
-        _head->next = newNode;
+        _tail->next = newNode;
     }
     else
     {
