@@ -167,7 +167,7 @@ T &List<T>::operator[](size_t index)
         // 注意: 将错误处理放到这里
         if (!cur)
         {
-            std::out_of_range("Index out of range.");
+            throw std::out_of_range("Index out of range.");
         }
         cur = cur->next;
     }
@@ -185,7 +185,7 @@ const T &List<T>::operator[](size_t index) const
         // 注意: 将错误处理放到这里
         if (!cur)
         {
-            std::out_of_range("Index out of range.");
+            throw std::out_of_range("Index out of range.");
         }
         cur = cur->next;
     }
@@ -212,7 +212,8 @@ void List<T>::pop_back()
         }
         else
         {
-            _tail = nullptr;
+            // !!!注意这里!!!
+            _head = nullptr;
         }
         --_size;
     }
