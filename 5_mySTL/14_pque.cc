@@ -57,6 +57,9 @@ void PriorityQueue<T>::heapifyUp()
     int index = data->size() - 1;
     while (index > 0)
     {
+        // !!!注意这里!!!
+        // son = 2 * dad + 1;
+        // dad = (son - 1) / 2;
         int parentIndex = (index - 1) / 2;
         // 大顶堆
         if ((*data)[index] > (*data)[parentIndex])
