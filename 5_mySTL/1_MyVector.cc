@@ -118,6 +118,8 @@ Vector<T> &Vector<T>::operator=(const Vector &other)
         // 拷贝元素到新内存
         std::copy(other._elements, other._elements + _size, _elements);
     }
+    // !!!注意这里 记得返回!!!
+    return *this;
 }
 
 // 添加元素到数组末尾
