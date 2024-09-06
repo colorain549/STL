@@ -297,8 +297,7 @@ void List<T>::remove(const T &val)
     else if (cur == _head && cur == _tail)
     {
         _head = nullptr;
-        // 注意这里
-        cur = nullptr;
+        _tail = nullptr;
     }
     // 是头结点 更新头节点为下一节点 及更新 新头节点的前驱_head->prev
     else if (cur == _head)
@@ -329,14 +328,22 @@ bool List<T>::empty() const
 template <typename T>
 void List<T>::clear()
 {
+    // 为什么这种写法会提示越界!?
+    // Node *cur = _head;
+    // while (cur)
+    // {
+    //     Node *tmp = cur;
+    //     cur = cur->next;
+    //     delete tmp;
+    // }
+    
     // 遍历节点 保存当前节点为临时节点
     // 到下一个节点时 删除临时节点
-    Node *cur = _head;
-    while (cur)
+    while (_head)
     {
-        Node *tmp = cur;
-        cur = cur->next;
-        delete tmp;
+        Node *temp = _head;
+        _head = _head->next;
+        delete temp;
     }
     // 记得更新_tail
     _tail = nullptr;
