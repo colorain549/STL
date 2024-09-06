@@ -112,7 +112,7 @@ Vector<T> &Vector<T>::operator=(const Vector &other)
         // 笔记: _capacity是新数组容量 other._capacity是原数组容量
         _capacity = other._capacity;
         // 新数组的_size
-        _size = other._size();
+        _size = other._size;
         // 分配内存
         _elements = new T(_capacity);
         // 拷贝元素到新内存
