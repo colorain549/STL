@@ -114,7 +114,7 @@ void Deque<T>::pop_front()
 {
     if (_size == 0)
     {
-        std::out_of_range("Deque is empty.");
+        throw std::out_of_range("Deque is empty.");
     }
     // example(_forntIndex = 0, _capacity = 5)
     // _ _ _ _ _ _ _ _ _ _ _
@@ -132,7 +132,7 @@ void Deque<T>::pop_back()
 {
     if (_size == 0)
     {
-        std::out_of_range("Deque is empty.");
+        throw std::out_of_range("Deque is empty.");
     }
     // example(_backIndex = 3, _capacity = 5)
     // _ _ _ _ _ _ _ _ _ _ _
@@ -150,7 +150,7 @@ T &Deque<T>::operator[](int index)
 {
     if (index < 0 || index > _size - 1)
     {
-        std::out_of_range("Index out of range.");
+        throw std::out_of_range("Index out of range.");
     }
     // example(_forntIndex = 0, _capacity = 5)
     // _ _ _ _ _ _ _ _ _ _ _
@@ -185,7 +185,7 @@ void Deque<T>::printElements() const
     // 检查
     if (_size == 0)
     {
-        std::out_of_range("Deque is empty.");
+        throw std::out_of_range("Deque is empty.");
     }
     // example(_forntIndex = 3, _capacity = 5)
     // _ _ _ _ _ _ _ _ _ _ _
