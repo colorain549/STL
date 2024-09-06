@@ -165,7 +165,7 @@ T &List<T>::operator[](size_t index)
     for (size_t i = 0; i < index; i++)
     {
         // 注意: 将错误处理放到这里
-        if (index < 0 || index > _size - 1)
+        if (!cur)
         {
             std::out_of_range("Index out of range.");
         }
@@ -183,7 +183,7 @@ const T &List<T>::operator[](size_t index) const
     for (size_t i = 0; i < index; i++)
     {
         // 注意: 将错误处理放到这里
-        if (index < 0 || index > _size - 1)
+        if (!cur)
         {
             std::out_of_range("Index out of range.");
         }
@@ -296,7 +296,8 @@ void List<T>::remove(const T &val)
     else if (cur == _head && cur == _tail)
     {
         _head = nullptr;
-        _tail = nullptr;
+        // 注意这里
+        cur = nullptr;
     }
     // 是头结点 更新头节点为下一节点 及更新 新头节点的前驱_head->prev
     else if (cur == _head)
