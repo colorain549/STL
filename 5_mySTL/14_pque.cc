@@ -115,6 +115,7 @@ PriorityQueue<T>::PriorityQueue() : data(make_shared<vector<T>>()) {}
 template <typename T>
 PriorityQueue<T>::PriorityQueue(const shared_ptr<vector<T>> &data) : data(data)
 {
+    // size_t 表示非负数 不能替代int 否则死循环
     int size = data->size();
     for (int i = (size / 2) - 1; i >= 0; --i)
     {
