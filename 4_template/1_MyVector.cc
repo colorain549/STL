@@ -229,6 +229,11 @@ int main()
         else if (command == "foreach")
         {
             // 范围for循环
+            if (ivec.getSize() == 0)
+            {
+                cout << "empty" << endl;
+                continue;
+            }
             for (const auto &elem : ivec)
             {
                 cout << elem << " ";
