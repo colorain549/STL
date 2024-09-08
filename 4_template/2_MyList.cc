@@ -114,11 +114,11 @@ void List<T>::push_front(const T &val) {}
 template <typename T>
 size_t List<T>::getSize() const {}
 
-// 访问链表中的元素
+// 访问链表中的元素(数据)
 template <typename T>
 T &List<T>::operator[](size_t index) {}
 
-// 访问链表中的元素(const)
+// 访问链表中的元素(数据)(const)
 template <typename T>
 const T &List<T>::operator[](size_t index) const {}
 
@@ -134,7 +134,7 @@ void List<T>::pop_front() {}
 template <typename T>
 typename List<T>::Node *List<T>::getNode(const T &val) {}
 
-// 查找指定值的节点
+// 查找指定值的节点的引用
 template <typename T>
 T *List<T>::find(const T &val) {}
 

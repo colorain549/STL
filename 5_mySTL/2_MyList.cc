@@ -157,7 +157,7 @@ size_t List<T>::getSize() const
     return _size;
 }
 
-// 访问链表中的元素
+// 访问链表中的元素(数据)
 template <typename T>
 T &List<T>::operator[](size_t index)
 {
@@ -174,7 +174,7 @@ T &List<T>::operator[](size_t index)
     return cur->data;
 }
 
-// 访问链表中的元素(const)
+// 访问链表中的元素(数据)(const)
 template <typename T>
 const T &List<T>::operator[](size_t index) const
 {
@@ -257,7 +257,7 @@ typename List<T>::Node *List<T>::getNode(const T &val)
     return cur;
 }
 
-// 查找指定值的节点的值
+// 查找指定值的节点的值的引用
 template <typename T>
 T *List<T>::find(const T &val)
 {
