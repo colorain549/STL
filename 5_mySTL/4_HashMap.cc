@@ -88,7 +88,7 @@ private:
         }
         // 定义在头文件<utility>
         // 使用移动语义更新桶数组
-        buckets = move(newBuckets);
+        buckets = std::move(newBuckets);
         // 更新哈希表大小
         tableSize = newSize;
     }
