@@ -14,7 +14,6 @@ using std::getline;
 using std::hash;
 using std::istringstream;
 using std::list;
-using std::move;
 using std::string;
 using std::vector;
 
@@ -52,7 +51,7 @@ class HashTable
     };
 
 private:
-    // 定义桶的类型为存储键的链表
+    // 定义桶的类型为存储键的链表(using 指定别名)
     using Bucket = list<HashNode>;
     // 存储所有桶的动态数组
     vector<Bucket> buckets;
