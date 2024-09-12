@@ -97,7 +97,7 @@ public:
     HashTable(size_t size = 10, const Hash &hashFunc = Hash())
         : buckets(size), hashFunction(hashFunc), tableSize(size), numElements(0) {}
 
-    // 插入键到哈希表中
+    // 插入键值对到哈希表中
     void insert(const Key &key, const Value &value)
     {
         // 检查是否需要重哈希
