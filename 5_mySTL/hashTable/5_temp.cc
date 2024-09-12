@@ -15,6 +15,7 @@
 #include <list>
 #include <vector>
 #include <utility>
+#include <algorithm>
 
 using std::cin;
 using std::cout;
@@ -156,7 +157,7 @@ void HashTable<Key, Value, Hash>::rehashAllKey(size_t newSize)
         for (HashNode &hashNode : bucket)
         {
             // 为键计算新的索引
-            size_t newIndex = hashFunction(hashNode._key) % tableSize;
+            size_t newIndex = hashFunction(hashNode._key) % newSize;
             // 将键添加到新桶中
             newBuckets[newIndex].push_back(hashNode);
         }
@@ -178,7 +179,7 @@ template <typename Key, typename Value, typename Hash>
 void HashTable<Key, Value, Hash>::insertKeyValue(const Key &key, const Value &value)
 {
     // 检查是否需要重哈希
-    if ((numElements + 1) > maxLoadFactor * numElements)
+    if ((numElements + 1) > maxLoadFactor * tableSize)
     {
         // 处理clear后tableSize=0的情况
         if (tableSize == 0)
@@ -267,6 +268,7 @@ void HashTable<Key, Value, Hash>::print() const
             hashNode.print();
         }
     }
+    cout << endl;
 }
 
 template <typename Key, typename Value, typename Hash>
