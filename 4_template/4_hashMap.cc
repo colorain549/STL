@@ -138,34 +138,7 @@ template <typename Key, typename Value, typename Hash>
 HashTable<Key, Value, Hash>::HashTable(size_t size, const Hash &hashFunc)
     : buckets(size), hashFunction(hashFunc), tableSize(size), numElements(0) {}
 
-// 插入键到哈希表中
-template <typename Key, typename Value, typename Hash>
-void HashTable<Key, Value, Hash>::insertKey(const Key &key)
-{
-    insert(key, Value{});
-}
-
-// 从哈希表中移除键
-template <typename Key, typename Value, typename Hash>
-void HashTable<Key, Value, Hash>::eraseKey(const Key &key)
-{
-    // 计算键的索引
-    size_t index = hashKey(key);
-    // 获取对应的桶
-    auto &bucket = buckets[index];
-    // 查找键
-    auto it = find(bucket.begin(), bucket.end(), key);
-    // 如果找到键
-    if (it != bucket.end())
-    {
-        // 从桶中移除键
-        bucket.erase(it);
-        // 减少元素数量
-        numElements--;
-    }
-}
-
-// 查找键是否存在于哈希表中
+// 查找键值对到哈希表中
 template <typename Key, typename Value, typename Hash>
 void HashTable<Key, Value, Hash>::insertKeyValue(const Key &key, const Value &value)
 {
@@ -188,6 +161,35 @@ void HashTable<Key, Value, Hash>::insertKeyValue(const Key &key, const Value &va
         bucket.push_back(HashNode(key, value));
         // 增加元素数量
         ++numElements;
+    }
+}
+
+// 插入键到哈希表中
+template <typename Key, typename Value, typename Hash>
+void HashTable<Key, Value, Hash>::insertKey(const Key &key)
+{
+    // insertKeyValue?
+    // insertKeyValue(key, Value{});
+    insert(key, Value{});
+}
+
+// 从哈希表中移除键
+template <typename Key, typename Value, typename Hash>
+void HashTable<Key, Value, Hash>::eraseKey(const Key &key)
+{
+    // 计算键的索引
+    size_t index = hashKey(key);
+    // 获取对应的桶
+    auto &bucket = buckets[index];
+    // 查找键
+    auto it = find(bucket.begin(), bucket.end(), key);
+    // 如果找到键
+    if (it != bucket.end())
+    {
+        // 从桶中移除键
+        bucket.erase(it);
+        // 减少元素数量
+        numElements--;
     }
 }
 
