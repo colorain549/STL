@@ -1,4 +1,6 @@
 // 基于 双端队列 deque
+// https://kamacoder.com/problempage.php?pid=1167&cid=10&lid=116
+// 
 #include <iostream>
 #include <deque>
 #include <vector>

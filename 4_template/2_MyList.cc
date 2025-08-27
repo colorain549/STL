@@ -1,4 +1,6 @@
 // 基于 双向链表
+// https://kamacoder.com/problempage.php?pid=1157&cid=10&lid=106
+// 
 #include <iostream>
 #include <ostream>
 #include <sstream>

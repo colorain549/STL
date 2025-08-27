@@ -1,4 +1,6 @@
 // 基于 维护 element capacity size
+// https://kamacoder.com/problempage.php?pid=1156&cid=10&lid=105
+// 
 #include <iostream>
 #include <memory>
 #include <sstream>
