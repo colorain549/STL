@@ -1,6 +1,6 @@
 // 基于 双端队列 deque
 // https://kamacoder.com/problempage.php?pid=1168&cid=10&lid=117
-// 
+//
 #include <iostream>
 #include <deque>
 #include <vector>
@@ -48,7 +48,8 @@ public:
 
 // 构造函数
 template <typename T>
-Queue<T>::Queue() : _dque(make_shared<deque<T>>()) {}
+Queue<T>::Queue()
+    : _dque(make_shared<deque<T>>()) {}
 
 // 将元素添加到队尾
 template <typename T>

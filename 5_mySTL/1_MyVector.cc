@@ -1,9 +1,13 @@
 // 基于 维护 element capacity size
 // https://kamacoder.com/problempage.php?pid=1156&cid=10&lid=105
-// 
+//
+// 1 基于 维护 element capacity size
+// 2 模板
+//
 #include <iostream>
 #include <memory>
 #include <sstream>
+#include <algorithm>
 
 using std::cin;
 using std::cout;
@@ -19,8 +23,8 @@ class Vector
 private:
     // 笔记: 可将 T *_elements 想象为数组
     T *_elements;
-    size_t _capacity;
     size_t _size;
+    size_t _capacity;
 
 public:
     // 构造函数
@@ -81,25 +85,26 @@ private:
 
 // 构造函数
 template <typename T>
-Vector<T>::Vector() : _elements(nullptr), _capacity(0), _size(0) {}
+Vector<T>::Vector()
+    : _elements(nullptr), _size(0), _capacity(0) {}
 
 // 析构函数
 template <typename T>
 Vector<T>::~Vector()
 {
     delete[] _elements;
+    _elements = nullptr;
 }
 
 // 拷贝构造函数
 template <typename T>
-Vector<T>::Vector(const Vector &other) : _capacity(other._capacity), _size(other._size)
+Vector<T>::Vector(const Vector &other)
+    : _elements(new T[other._capacity]), _size(other._size), _capacity(other._capacity)
 {
-    // 分配内存
-    _elements = new T[_capacity];
     // 从一个容器复制元素到另一个容器
     // 旧容器的迭代器开始位置 旧容器的迭代器结束位置 新容器的迭代器开始位置
     // 笔记: other._elements是原来的数组 _elements是新数组
-    std::copy(other._elements, other._elements + _size, _elements);
+    std::copy(other._elements, other._elements + other._size, _elements);
 }
 
 // 拷贝赋值操作符
@@ -109,58 +114,25 @@ Vector<T> &Vector<T>::operator=(const Vector &other)
     // 防止自复制
     if (this != &other)
     {
-        // 清空_elements 下面用来指向新数组内存
+        // 申请新内存
+        T *newElements = new T[other._capacity];
+
+        // 拷贝元素到新内存
+        std::copy(other._elements, other._elements + other._size, newElements);
+
+        // 释放内存 接下来用于指向新数组内存
         delete[] _elements;
-        // 笔记: _capacity是新数组容量 other._capacity是原数组容量
-        _capacity = other._capacity;
+
+        // 更新
+        _elements = newElements;
         // 新数组的_size
         _size = other._size;
-        // 分配内存
-        _elements = new T(_capacity);
-        // 拷贝元素到新内存
-        std::copy(other._elements, other._elements + _size, _elements);
+        // 笔记: _capacity是新数组容量 other._capacity是原数组容量
+        _capacity = other._capacity;
     }
     // !!!注意这里 记得返回!!!
     return *this;
 }
-
-// 拷贝赋值操作符(更健壮的写法)
-// template <typename T>  
-// Vector<T>& Vector<T>::operator=(const Vector<T>& other)  
-// {  
-//     // 防止自复制  
-//     if (this != &other)  
-//     {  
-//         // 分配新内存  
-//         T* newElements = new T[other._capacity];  
-  
-//         try  
-//         {  
-//             // 拷贝元素到新内存  
-//             std::copy(other._elements, other._elements + other._size, newElements);  
-  
-//             // 释放旧内存  
-//             delete[] _elements;  
-  
-//             // 更新内部状态  
-//             _elements = newElements;  
-//             _capacity = other._capacity;  
-//             _size = other._size;  
-//         }  
-//         catch (const std::bad_alloc& e)  
-//         {  
-//             // 处理内存分配失败的情况  
-//             // 释放已分配但尚未使用的内存  
-//             delete[] newElements;  
-  
-//             // 可以选择抛出异常、记录错误或采取其他恢复措施  
-//             throw; // 重新抛出异常  
-//         }  
-//     }  
-  
-//     // 返回当前对象的引用  
-//     return *this;  
-// }
 
 // 添加元素到数组末尾
 template <typename T>
@@ -194,8 +166,8 @@ size_t Vector<T>::getCapacity() const
 template <typename T>
 T &Vector<T>::operator[](size_t index)
 {
-    // 检查
-    if (index < 0 || index >= _size)
+    // 检查边界
+    if (index >= _size)
     {
         throw std::out_of_range("Index out of range.");
     }
@@ -207,7 +179,7 @@ template <typename T>
 const T &Vector<T>::operator[](size_t index) const
 {
     // 检查
-    if (index < 0 || index >= _size)
+    if (index >= _size)
     {
         throw std::out_of_range("Index out of range.");
     }
@@ -218,7 +190,7 @@ const T &Vector<T>::operator[](size_t index) const
 template <typename T>
 void Vector<T>::insert(size_t index, const T &val)
 {
-    if (index < 0 || index > _size)
+    if (index > _size)
     {
         throw std::out_of_range("Index out of range.");
     }
@@ -301,7 +273,7 @@ void Vector<T>::reserve(size_t newCapacity)
     if (newCapacity > _capacity)
     {
         // 分配内存
-        T *newElements = new T(newCapacity);
+        T *newElements = new T[newCapacity];
         // 旧内存 复制到 新内存
         std::copy(_elements, _elements + _size, newElements);
         // 删除旧内存

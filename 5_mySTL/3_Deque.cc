@@ -1,6 +1,6 @@
 // 基于 循环数组
 // https://kamacoder.com/problempage.php?pid=1158&cid=10&lid=107
-// 
+//
 #include <iostream>
 #include <sstream>
 
@@ -58,7 +58,8 @@ private:
 
 // 构造函数
 template <typename T>
-Deque<T>::Deque() : _elements(nullptr), _capacity(0), _frontIndex(0), _backIndex(0), _size(0) {}
+Deque<T>::Deque()
+    : _elements(nullptr), _capacity(0), _frontIndex(0), _backIndex(0), _size(0) {}
 
 // 析构函数
 template <typename T>

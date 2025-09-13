@@ -1,6 +1,6 @@
 // 基于 双向链表
 // https://kamacoder.com/problempage.php?pid=1157&cid=10&lid=106
-// 
+//
 #include <iostream>
 #include <ostream>
 #include <sstream>
@@ -99,7 +99,8 @@ public:
 
 // 构造函数
 template <typename T>
-List<T>::List() : _head(nullptr), _tail(nullptr), _size(0) {}
+List<T>::List()
+    : _head(nullptr), _tail(nullptr), _size(0) {}
 
 // 析构函数
 template <typename T>
@@ -338,7 +339,7 @@ void List<T>::clear()
     //     cur = cur->next;
     //     delete tmp;
     // }
-    
+
     // 遍历节点 保存当前节点为临时节点
     // 到下一个节点时 删除临时节点
     while (_head)

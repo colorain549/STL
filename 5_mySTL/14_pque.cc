@@ -62,12 +62,12 @@ void PriorityQueue<T>::heapifyUp()
         // !!!注意这里!!!
         // son = 2 * dad + 1;
         // dad = (son - 1) / 2;
-        int parentIndex = (index - 1) / 2;
+        int parent = (index - 1) / 2;
         // 大顶堆
-        if ((*data)[index] > (*data)[parentIndex])
+        if ((*data)[index] > (*data)[parent])
         {
-            swap((*data)[index], (*data)[parentIndex]);
-            index = parentIndex;
+            swap((*data)[index], (*data)[parent]);
+            index = parent;
         }
         else
         {
@@ -80,13 +80,13 @@ void PriorityQueue<T>::heapifyUp()
 template <typename T>
 void PriorityQueue<T>::heapifyDown()
 {
-    int index = 0;
+    int dad = 0;
     int size = (*data).size();
     while (true)
     {
-        int leftChild = 2 * index + 1;
-        int rightChild = 2 * index + 2;
-        int largest = index;
+        int leftChild = 2 * dad + 1;
+        int rightChild = 2 * dad + 2;
+        int largest = dad;
         // 大顶堆
         if (leftChild < size && (*data)[leftChild] > (*data)[largest])
         {
@@ -97,10 +97,10 @@ void PriorityQueue<T>::heapifyDown()
             largest = rightChild;
         }
 
-        if (largest != index)
+        if (largest != dad)
         {
-            swap((*data)[index], (*data)[largest]);
-            index = largest;
+            swap((*data)[dad], (*data)[largest]);
+            dad = largest;
         }
         else
         {
